@@ -6,11 +6,13 @@ import CommentsScreen from './CommentsScreen';
 
 const RootStack = createNativeStackNavigator();
 
-const RootStackScreen = () => (
-  <RootStack.Navigator>
-    <RootStack.Screen name="PostsScreen" component={PostsScreen} />
-    <RootStack.Screen name="CommentsScreen" component={CommentsScreen} />
-  </RootStack.Navigator>
-);
+const RootStackScreen = () => {
+  return (
+    <RootStack.Navigator>
+      <RootStack.Screen name="PostsScreen" component={PostsScreen} />
+      <RootStack.Screen name="CommentsScreen" component={CommentsScreen} />
+    </RootStack.Navigator>
+  );
+};
 
 export default RootStackScreen;
