@@ -1,21 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {useSelector, useDispatch} from 'react-redux';
+import {fetchComments} from '../asyncActions/comments';
 import Loader from '../components/Loader';
 
-import api from '../utils/Api';
-
 const CommentsScreen = ({route}) => {
-  const [comments, setComments] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const dispatch = useDispatch();
+  const comments = useSelector(state => state.comments.comments);
+  const isLoading = useSelector(state => state.comments.isLoading);
 
   useEffect(() => {
-    api
-      .getComments(route.params.id)
-      .then(comments => {
-        setComments(comments);
-      })
-      .catch(err => console.log(err))
-      .finally(() => setIsLoading(false));
+    dispatch({type: 'TOGGLE_LOADING', payload: true});
+    dispatch(fetchComments(route.params.id));
   }, []);
 
   if (isLoading) {
@@ -23,6 +19,7 @@ const CommentsScreen = ({route}) => {
   }
   return (
     <View style={styles.wrapper}>
+      {isLoading && <Loader />}
       <FlatList
         keyExtractor={item => item.id}
         ListHeaderComponent={
@@ -32,14 +29,14 @@ const CommentsScreen = ({route}) => {
                 ...styles.title,
                 ...styles.headerText,
               }}>
-              Заголовок: {route.params.title}
+              О чем пост: {route.params.title}
             </Text>
             <Text
               style={{
                 ...styles.title,
                 ...styles.headerText,
               }}>
-              О чем пост: {route.params.body}
+              Тело: {route.params.body}
             </Text>
             <Text
               style={{

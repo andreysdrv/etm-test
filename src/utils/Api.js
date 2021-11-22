@@ -12,7 +12,7 @@ class Api {
   }
 
   async getPosts() {
-    const res = await fetch(this._url + 'posts?_start=0&_limit=10', {
+    const res = await fetch(this._url + 'posts?_start=0&_limit=5', {
       method: 'GET',
       headers: this._headers,
     });
