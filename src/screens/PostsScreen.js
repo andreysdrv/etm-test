@@ -4,20 +4,17 @@ import {connect} from 'react-redux';
 import {fetchPosts, removePost} from '../asyncActions/posts';
 import Loader from '../components/Loader';
 
-const randomDate = (start, end, startHour, endHour) => {
-  const date = new Date(+start + Math.random() * (end - start));
-  const hour = (startHour + Math.random() * (endHour - startHour)) | 0;
-  date.setHours(hour);
-  return date;
-};
-
 class PostsScreen extends Component {
-  componentDidUpdate() {
-    console.log(this.props.posts.length);
-  }
   componentDidMount() {
     this.props.toggleLoading();
     this.props.getPosts();
+  }
+
+  randomDate(start, end, startHour, endHour) {
+    const date = new Date(+start + Math.random() * (end - start));
+    const hour = startHour + Math.random() * (endHour - startHour) || 0;
+    date.setHours(hour);
+    return date;
   }
 
   render() {
@@ -36,14 +33,13 @@ class PostsScreen extends Component {
           renderItem={({item}) => (
             <TouchableOpacity
               activeOpacity={0.5}
-              style={styles.button}
               onPress={() =>
-                this.props.navigation.navigate('CommentsScreen', item)
+                this.props.navigation.navigate('Комментарии', item)
               }>
               <View style={styles.post}>
                 <View style={styles.postHeading}>
                   <Text style={styles.text}>
-                    {randomDate(
+                    {this.randomDate(
                       1012002003045,
                       1912002003045,
                       0,
@@ -52,13 +48,12 @@ class PostsScreen extends Component {
                   </Text>
                   <TouchableOpacity
                     activeOpacity={0.2}
-                    style={styles.button}
                     onPress={() => {
                       this.props.toggleLoading();
                       this.props.handleDeletePost(item);
                     }}>
                     <Text style={{...styles.buttonText, color: '#ed3e58'}}>
-                      Delete
+                      Удалить
                     </Text>
                   </TouchableOpacity>
                 </View>
@@ -108,6 +103,7 @@ const styles = StyleSheet.create({
   postHeading: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginBottom: 10,
   },
   text: {
     color: '#dddbf1',
@@ -115,9 +111,6 @@ const styles = StyleSheet.create({
   title: {
     color: '#dddbf1',
     fontWeight: 'bold',
-  },
-  button: {
-    alignSelf: 'flex-end',
   },
   buttonText: {
     color: '#d1beb0',

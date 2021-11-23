@@ -9,8 +9,8 @@ export default class RootStackScreen extends Component {
   render() {
     return (
       <RootStack.Navigator>
-        <RootStack.Screen name="PostsScreen" component={PostsScreen} />
-        <RootStack.Screen name="CommentsScreen" component={CommentsScreen} />
+        <RootStack.Screen name="Посты" component={PostsScreen} />
+        <RootStack.Screen name="Комментарии" component={CommentsScreen} />
       </RootStack.Navigator>
     );
   }

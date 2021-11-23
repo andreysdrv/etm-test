@@ -25,14 +25,7 @@ class CommentsScreen extends Component {
                   ...styles.title,
                   ...styles.headerText,
                 }}>
-                О чем пост: {this.props.route.params.title}
-              </Text>
-              <Text
-                style={{
-                  ...styles.title,
-                  ...styles.headerText,
-                }}>
-                Тело: {this.props.route.params.body}
+                О чем пост: {this.props.route.params.body}
               </Text>
               <Text
                 style={{
@@ -47,8 +40,8 @@ class CommentsScreen extends Component {
           data={this.props.comments}
           renderItem={({item}) => (
             <View style={styles.post}>
+              <Text style={styles.text}>{item.body}</Text>
               <Text style={styles.title}>Автор: {item.name}</Text>
-              <Text style={styles.text}>Комментарий: {item.body}</Text>
               <Text style={styles.title}>Email: {item.email}</Text>
             </View>
           )}
@@ -92,6 +85,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: '#dddbf1',
+    marginBottom: 10,
   },
   title: {
     color: '#dddbf1',
@@ -109,5 +103,6 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 20,
     color: '#383f51',
+    marginBottom: 10,
   },
 });
