@@ -17,7 +17,6 @@ export const commentsReducer = (state = defaultState, action) => {
       return {
         ...state,
         comments: [...action.payload],
-        // comments: [...state.comments, ...action.payload],
       };
     default:
       return state;

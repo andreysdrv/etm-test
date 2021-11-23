@@ -1,19 +1,19 @@
-import React from 'react';
-import {StyleSheet, Text, View, ActivityIndicator} from 'react-native';
+import React, {Component} from 'react';
+import {StyleSheet, View, ActivityIndicator} from 'react-native';
 
-const Loader = () => {
-  return (
-    <View
-      style={{
-        ...styles.wrapper,
-        justifyContent: 'center',
-      }}>
-      <ActivityIndicator size="large" color="#383f51" />
-    </View>
-  );
-};
-
-export default Loader;
+export default class Loader extends Component {
+  render() {
+    return (
+      <View
+        style={{
+          ...styles.wrapper,
+          justifyContent: 'center',
+        }}>
+        <ActivityIndicator size="large" color="#383f51" />
+      </View>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   wrapper: {
