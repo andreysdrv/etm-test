@@ -11,11 +11,14 @@ class Api {
     return Promise.reject(`Ошибка: ${res.status}`);
   }
 
-  async getPosts() {
-    const res = await fetch(this._url + 'posts?_start=0&_limit=5', {
-      method: 'GET',
-      headers: this._headers,
-    });
+  async getPosts(start, limit) {
+    const res = await fetch(
+      this._url + `posts?_start=${start}&_limit=${limit}`,
+      {
+        method: 'GET',
+        headers: this._headers,
+      },
+    );
     return this._checkResponse(res);
   }
 

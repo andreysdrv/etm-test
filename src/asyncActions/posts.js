@@ -1,9 +1,9 @@
 import api from '../utils/Api';
 
-export const fetchPosts = () => {
+export const fetchPosts = (start, limit) => {
   return function (dispatch) {
     api
-      .getPosts()
+      .getPosts(start, limit)
       .then(posts => dispatch({type: 'GET_POSTS', payload: posts}))
       .catch(err => console.log(err))
       .finally(() => dispatch({type: 'TOGGLE_LOADING', payload: false}));

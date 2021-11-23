@@ -25,7 +25,14 @@ class CommentsScreen extends Component {
                   ...styles.title,
                   ...styles.headerText,
                 }}>
-                О чем пост: {this.props.route.params.body}
+                О чем пост:
+              </Text>
+              <Text
+                style={{
+                  ...styles.title,
+                  ...styles.headerText,
+                }}>
+                {this.props.route.params.body}
               </Text>
               <Text
                 style={{

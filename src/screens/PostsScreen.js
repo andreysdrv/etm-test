@@ -5,9 +5,22 @@ import {fetchPosts, removePost} from '../asyncActions/posts';
 import Loader from '../components/Loader';
 
 class PostsScreen extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      start: 0,
+      limit: 5,
+    };
+  }
+
   componentDidMount() {
     this.props.toggleLoading();
-    this.props.getPosts();
+    this.handleNextPosts();
+  }
+
+  handleNextPosts() {
+    this.props.getPosts(this.state.start, this.state.limit);
+    this.setState({start: this.state.start + this.state.limit});
   }
 
   randomDate(start, end, startHour, endHour) {
@@ -24,11 +37,22 @@ class PostsScreen extends Component {
     return (
       <View style={styles.wrapper}>
         <FlatList
-          onEndReached={() => this.props.getPosts()}
+          onEndReached={() => this.handleNextPosts()}
           onEndReachedThreshold={0.1}
           initialNumToRender={5}
-          keyExtractor={item => Math.random()}
+          keyExtractor={item => item.id}
           contentContainerStyle={styles.container}
+          ListHeaderComponent={
+            <View style={styles.header}>
+              <Text
+                style={{
+                  ...styles.title,
+                  ...styles.headerText,
+                }}>
+                Список постов
+              </Text>
+            </View>
+          }
           data={this.props.posts}
           renderItem={({item}) => (
             <TouchableOpacity
@@ -76,7 +100,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = () => {
   return {
-    getPosts: () => fetchPosts(),
+    getPosts: (start, limit) => fetchPosts(start, limit),
     toggleLoading: () => ({type: 'TOGGLE_LOADING', payload: true}),
     handleDeletePost: post => removePost(post),
   };
@@ -96,7 +120,7 @@ const styles = StyleSheet.create({
   post: {
     width: '100%',
     backgroundColor: '#383f51',
-    marginVertical: 5,
+    marginVertical: 10,
     borderRadius: 15,
     padding: 20,
   },
@@ -114,5 +138,13 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#d1beb0',
+  },
+  header: {
+    marginVertical: 5,
+  },
+  headerText: {
+    fontSize: 20,
+    color: '#383f51',
+    marginBottom: 10,
   },
 });
